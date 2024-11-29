@@ -32,8 +32,6 @@ class Tree:
             self.children.append(child_node)
             self.val_to_node = {**self.val_to_node, **child_node.val_to_node}
 
-        print(self.val_to_node)
-
     def find_lca(self, u, v):
         """
         Find the Lowest Common Ancestor (LCA) of two nodes in a tree.
