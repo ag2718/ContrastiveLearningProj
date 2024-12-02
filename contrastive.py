@@ -12,10 +12,10 @@ from data import load_data
 class_tree = None
 distance_matrix = None
 
-# use conda install pytorch torchvision -c pytorch in python env to import; if using Colab probably use pip 
+# use 'conda install pytorch torchvision -c pytorch' in python env to import; if using Colab probably use pip 
 
 def precompute_lca_distances(labels, class_tree):
-    num_labels = labels.size(0)
+    num_labels = len(labels)
     lca_matrix = torch.zeros((num_labels, num_labels), dtype=torch.long)
     distance_matrix = torch.zeros((num_labels, num_labels), dtype=torch.float)
 

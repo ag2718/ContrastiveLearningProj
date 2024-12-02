@@ -11,6 +11,8 @@ from datasets import load_dataset
 from torch.utils.data import DataLoader, Subset
 import pandas as pd
 import numpy as np
+from torchvision import transforms
+from tree import Tree
 
 '''
 dogs = [
@@ -281,48 +283,41 @@ def calculate_num_classes(array):
     return sum(calculate_num_classes(subarray) for subarray in array)
 
 def load_data():
-    # Define the path to the ImageNet dataset
-    #data_dir = '~/.cache/huggingface/datasets/imagenet-1k'
-    #imagenet_dataset = datasets.ImageNet(root=data_dir, split='train')
-
-    #imagenet_dataset = load_dataset("imagenet-1k", trust_remote_code=True)
-    #train_ds = imagenet_dataset['train']
-    #val_ds = imagenet_dataset['validation']
 
     train_ds = load_dataset("imagenet-1k", split='train', streaming=True, trust_remote_code=True)
     val_ds = load_dataset("imagenet-1k", split='validation', streaming=True, trust_remote_code=True)
 
     # List of dog class indices in ImageNet
-    dog_classes = np.arange(151, 269)
+    num_total_classes = calculate_num_classes(dogs)
+    class_tree =  Tree(dogs)
+    dog_classes = np.array(class_tree.nodes_at_depth(num_total_classes))
 
-    # Filter the dataset to include only dog classes
-    #dog_indices = [i for i, (_, label) in enumerate(train_ds) if label in dog_classes]
-    #dog_dataset = Subset(train_ds, dog_indices)
+    # Define transformations for the dataset
+    transform = transforms.Compose([
+        transforms.Resize((224, 224)),
+        transforms.ToTensor(),
+        transforms.Lambda(lambda x: x.repeat(3, 1, 1) if x.size(0) == 1 else x),  # Ensure 3 channels
+        transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
+    ])
+
+
     dog_dataset = train_ds.filter(lambda example: example['label'] in dog_classes)
-    #print ("Filtered train:", len(dog_dataset))
 
-    #dog_indices_val = [i for i, (_, label) in enumerate(val_ds) if label in dog_classes]
-    #dog_dataset_val = Subset(val_ds, dog_indices_val)
     dog_dataset_val = val_ds.filter(lambda example: example['label'] in dog_classes)
-    #print ("Filtered val:", len(dog_dataset_val))
 
-    #train_df = pd.DataFrame(dog_dataset)
-    #val_df = pd.DataFrame(dog_dataset_val)
-    #train_df.to_csv('dog_train_dataset.csv', index=False)
-    #val_df.to_csv('dog_val_dataset.csv', index=False)
+    def collate_fn(batch):
+        """
+        Custom collate function to apply transformations on streaming data.
+        """
+        images, labels = [], []
+        for example in batch:
+            image = transform(example['image'])  # Apply transformations
+            images.append(image)
+            labels.append(example['label'])
+        return torch.stack(images), torch.tensor(labels)
 
     # Create a DataLoader for the filtered dataset
-    train_dataloader = DataLoader(dog_dataset, batch_size=32, num_workers=4)
-    val_dataloader = DataLoader(dog_dataset_val, batch_size=32, shuffle=False, num_workers=4)
-
-    # Example usage: Iterate through the DataLoader
-    #for images, labels in train_dataloader:
-        #print(images.shape, labels.shape)
-        #print (labels)
-        #break
-
-    num_total_classes = calculate_num_classes(dogs)
+    train_dataloader = DataLoader(dog_dataset, batch_size=30, num_workers=4, collate_fn=collate_fn)
+    val_dataloader = DataLoader(dog_dataset_val, batch_size=30, shuffle=False, num_workers=4, collate_fn=collate_fn)
 
     return train_dataloader, val_dataloader, dogs, num_total_classes
-
-load_data()
