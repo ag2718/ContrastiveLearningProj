@@ -156,6 +156,8 @@ class Tree:
         """
 
         return [self.which_ancestor(u, possible_ancestors) for u in u_batched]
+    
+
 
 
 import unittest
