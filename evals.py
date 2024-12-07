@@ -64,3 +64,45 @@ def evaluate_model(model, dataloader, loss_fn, device, num_classes, class_tree, 
     accuracy = total_correct / total_samples
 
     return avg_loss, accuracy, precision, recall, f1, conf_matrix
+
+def evaluate_embeddings(model, dataloader, device):
+    """
+    Evaluates the model on a given dataloader and returns embeddings and labels.
+    """
+    model.eval()  # Set model to evaluation mode
+    all_embeddings = []
+    all_labels = []
+
+    with torch.no_grad():  # Disable gradients for evaluation
+        for images, labels in dataloader:
+            images, labels = images.to(device), labels.to(device)
+
+            # Forward pass
+            embeddings, _ = model(images)
+
+            # Store embeddings and labels
+            all_embeddings.append(embeddings)
+            all_labels.append(labels)
+
+    # Combine all embeddings and labels across batches
+    all_embeddings = torch.cat(all_embeddings, dim=0)
+    all_labels = torch.cat(all_labels, dim=0)
+
+    # Compute pairwise distances
+    distances = torch.cdist(all_embeddings, all_embeddings)  # Shape: (N, N)
+
+    # Compute diameter
+    diameter = distances.max().item()
+
+    # Compute margin
+    labels_equal = all_labels.unsqueeze(0) == all_labels.unsqueeze(1)  # Shape: (N, N)
+    positive_distances = distances[labels_equal].view(-1)
+    negative_distances = distances[~labels_equal].view(-1)
+
+    # Avoid empty tensors (if no pos/neg pairs)
+    min_positive = positive_distances.min().item() if positive_distances.numel() > 0 else float('inf')
+    max_negative = negative_distances.max().item() if negative_distances.numel() > 0 else float('-inf')
+
+    margin = min_positive - max_negative
+
+    return diameter, margin

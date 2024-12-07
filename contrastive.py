@@ -8,7 +8,7 @@ import numpy as np
 
 from tree import Tree
 from data import load_data
-from evals import evaluate_model
+from evals import evaluate_model, evaluate_embeddings
 
 import argparse
 from tqdm import tqdm
@@ -188,10 +188,12 @@ if __name__ == "__main__":
         )
 
         # Contrastive stats (diameter and margin)
+        diameter, margin = evaluate_embeddings(model, val_dataloader, device)
 
         # Log epoch statistics
         print(f"Epoch [{epoch + 1}/{args.num_epochs}]")
         print(f"Train Loss: {epoch_loss:.4f}, Train Accuracy: {train_accuracy:.4f}")
         print(f"Validation Loss: {val_loss:.4f}, Validation Accuracy: {val_accuracy:.4f}")
         print(f"Validation Precision: {val_precision:.4f}, Recall: {val_recall:.4f}, F1-Score: {val_f1:.4f}")
+        print(f"Diameter: {diameter:.4f}, Margin: {margin:.4f}")
         print("-" * 50)
