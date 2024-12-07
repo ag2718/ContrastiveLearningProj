@@ -14,154 +14,6 @@ import numpy as np
 from torchvision import transforms
 from tree import Tree
 
-'''
-dogs = [
-    1, #"Hunting Dog",
-        [
-            2, #"Sporting Dog",
-                [
-                    3, #"Spaniel",
-                    [
-                        [156],  # Blenheim spaniel
-                        [215],  # Brittany spaniel
-                        [216],  # Clumber, clumber spaniel
-                        [219],  # Cocker spaniel, English cocker spaniel, cocker
-                        [217],  # English springer, English springer spaniel
-                        [218],  # Welsh springer spaniel
-                        [220],  # Sussex spaniel
-                        [221],  # Irish water spaniel
-                    ],
-                ],
-                [
-                    4, #"Retriever",
-                    [
-                        [205],  # Flat-coated retriever
-                        [206],  # Curly-coated retriever
-                        [207],  # Golden retriever
-                        [208],  # Labrador retriever
-                        [209],  # Chesapeake Bay retriever
-                    ],
-                ],
-                [
-                    5, #"Pointer",
-                    [
-                        [210],  # German short-haired pointer
-                        [211],  # Vizsla, Hungarian pointer
-                    ],
-                ],
-                [
-                    6, #"Setter",
-                    [
-                        [212],  # English setter
-                        [213],  # Irish setter, red setter
-                        [214],  # Gordon setter
-                    ],
-                ],
-        ],
-        [
-            7, #"Terrier",
-            [
-                [
-                    8, #"Wirehair",
-                    [
-                        [189],  # Lakeland terrier
-                        [190],  # Sealyham terrier, Sealyham
-                    ],
-                ],
-                [
-                    9, #"Bullterrier",
-                    [
-                        [179],  # Staffordshire bullterrier, Staffordshire bull terrier
-                        [180],  # American Staffordshire terrier, Staffordshire terrier, American pit bull terrier, pit bull terrier
-                    ],
-                ],
-                [
-                    10, #"Fox Terrier",
-                    [
-                        [188],  # Wire-haired fox terrier
-                    ],
-                ],
-                [
-                    11, #"Schnauzer",
-                    [
-                        [196],  # Miniature schnauzer
-                        [197],  # Giant schnauzer
-                        [198],  # Standard schnauzer
-                    ],
-                ],
-                [
-                    [191],  # Airedale, Airedale terrier
-                    [193],  # Australian terrier
-                    [181],  # Bedlington terrier
-                    [182],  # Border terrier
-                    [192],  # Cairn, cairn terrier
-                    [194],  # Dandie Dinmont, Dandie Dinmont terrier
-                    [195],  # Boston bull, Boston terrier
-                    [184],  # Irish terrier
-                    [183],  # Kerry blue terrier
-                    [185],  # Norfolk terrier
-                    [186],  # Norwich terrier
-                    [199],  # Scotch terrier, Scottish terrier, Scottie
-                    [200],  # Tibetan terrier, chrysanthemum dog
-                    [201],  # Silky terrier, Sydney silky
-                    [202],  # Soft-coated wheaten terrier
-                    [203],  # West Highland white terrier
-                    [187],  # Yorkshire terrier
-                ],
-            ],
-        ],
-        [
-            12, #"Hound",
-            [
-                [
-                    13, #"Coonhound",
-                    [
-                        [165],  # Black-and-tan coonhound
-                        [166],  # Walker hound, Walker foxhound
-                    ],
-                ],
-                [
-                    14, #"Foxhound",
-                    [
-                        [167],  # English foxhound
-                        [168],  # Redbone
-                    ],
-                ],
-                [
-                    15, #"Greyhound",
-                    [
-                        [171],  # Italian greyhound
-                        [172],  # Whippet
-                    ],
-                ],
-                [
-                    16, #"Wolfhound",
-                    [
-                        [169],  # Borzoi, Russian wolfhound
-                        [170],  # Irish wolfhound
-                    ],
-                ],
-                [
-                    17, #"Other Hounds",
-                    [
-                        [160],  # Afghan hound, Afghan
-                        [161],  # Basset, basset hound
-                        [162],  # Beagle
-                        [163],  # Bloodhound, sleuthhound
-                        [164],  # Bluetick
-                        [173],  # Ibizan hound, Ibizan Podenco
-                        [174],  # Norwegian elkhound, elkhound
-                        [175],  # Otterhound, otter hound
-                        [176],  # Saluki, gazelle hound
-                        [177],  # Scottish deerhound, deerhound
-                        [178],  # Weimaraner
-                        [159],  # Rhodesian ridgeback
-                    ],
-                ],
-            ],
-        ],
-]'''
-
 dogs = [
     1,  # "Hunting Dog"
     [
@@ -292,6 +144,7 @@ def load_data():
     class_tree =  Tree(dogs)
     dog_classes = np.array(class_tree.nodes_at_depth(num_total_classes))
 
+
     # Define transformations for the dataset
     transform = transforms.Compose([
         transforms.Resize((224, 224)),
@@ -317,7 +170,7 @@ def load_data():
         return torch.stack(images), torch.tensor(labels)
 
     # Create a DataLoader for the filtered dataset
-    train_dataloader = DataLoader(dog_dataset, batch_size=30, num_workers=4, collate_fn=collate_fn)
-    val_dataloader = DataLoader(dog_dataset_val, batch_size=30, shuffle=False, num_workers=4, collate_fn=collate_fn)
+    train_dataloader = DataLoader(dog_dataset, batch_size=100, num_workers=4, collate_fn=collate_fn)
+    val_dataloader = DataLoader(dog_dataset_val, batch_size=100, shuffle=False, num_workers=4, collate_fn=collate_fn)
 
     return train_dataloader, val_dataloader, dogs, num_total_classes

@@ -1,0 +1,31 @@
+cpu-bind=MASK - espresso, task  0  0 [923113]: mask 0xff00000000000000000ff00000000000000000 set
+/data/healthy-ml/scratch/abinitha/miniconda3/envs/contrastive/lib/python3.12/site-packages/torchvision/models/_utils.py:208: UserWarning: The parameter 'pretrained' is deprecated since 0.13 and may be removed in the future, please use 'weights' instead.
+  warnings.warn(
+/data/healthy-ml/scratch/abinitha/miniconda3/envs/contrastive/lib/python3.12/site-packages/torchvision/models/_utils.py:223: UserWarning: Arguments other than a weight enum or `None` for 'weights' are deprecated since 0.13 and may be removed in the future. The current behavior is equivalent to passing `weights=ResNet18_Weights.IMAGENET1K_V1`. You can also use `weights=ResNet18_Weights.DEFAULT` to get the most up-to-date weights.
+  warnings.warn(msg)
+/data/healthy-ml/scratch/abinitha/ContrastiveLearningProj/contrastive.py:137: UserWarning: To copy construct from a tensor, it is recommended to use sourceTensor.clone().detach() or sourceTensor.clone().detach().requires_grad_(True), rather than torch.tensor(sourceTensor).
+  distance_matrix = torch.tensor(precompute_lca_distances(np.arange(len(contrastive_classes)), contrastive_classes, contrastive_class_to_id, class_tree), device=device)
+/data/healthy-ml/scratch/abinitha/miniconda3/envs/contrastive/lib/python3.12/site-packages/PIL/TiffImagePlugin.py:935: UserWarning: Corrupt EXIF data.  Expecting to read 4 bytes but only got 0. 
+  warnings.warn(str(msg))
+/data/healthy-ml/scratch/abinitha/miniconda3/envs/contrastive/lib/python3.12/site-packages/PIL/TiffImagePlugin.py:935: UserWarning: Corrupt EXIF data.  Expecting to read 2 bytes but only got 0. 
+  warnings.warn(str(msg))
+/data/healthy-ml/scratch/abinitha/miniconda3/envs/contrastive/lib/python3.12/site-packages/PIL/TiffImagePlugin.py:935: UserWarning: Corrupt EXIF data.  Expecting to read 2 bytes but only got 0. 
+  warnings.warn(str(msg))
+/data/healthy-ml/scratch/abinitha/miniconda3/envs/contrastive/lib/python3.12/site-packages/PIL/TiffImagePlugin.py:935: UserWarning: Truncated File Read
+  warnings.warn(str(msg))
+/data/healthy-ml/scratch/abinitha/miniconda3/envs/contrastive/lib/python3.12/site-packages/PIL/TiffImagePlugin.py:935: UserWarning: Corrupt EXIF data.  Expecting to read 2 bytes but only got 0. 
+  warnings.warn(str(msg))
+/data/healthy-ml/scratch/abinitha/miniconda3/envs/contrastive/lib/python3.12/site-packages/PIL/TiffImagePlugin.py:745: UserWarning: Metadata Warning, tag 274 had too many entries: 4, expected 1
+  warnings.warn(
+/data/healthy-ml/scratch/abinitha/miniconda3/envs/contrastive/lib/python3.12/site-packages/PIL/TiffImagePlugin.py:935: UserWarning: Corrupt EXIF data.  Expecting to read 2 bytes but only got 0. 
+  warnings.warn(str(msg))
+/data/healthy-ml/scratch/abinitha/miniconda3/envs/contrastive/lib/python3.12/site-packages/PIL/TiffImagePlugin.py:745: UserWarning: Metadata Warning, tag 274 had too many entries: 4, expected 1
+  warnings.warn(
+Traceback (most recent call last):
+  File "/data/healthy-ml/scratch/abinitha/ContrastiveLearningProj/contrastive.py", line 171, in <module>
+    print(f"Epoch [{epoch+1}/2], Loss: {running_loss/len(train_dataloader):.4f}")
+                                                     ^^^^^^^^^^^^^^^^^^^^^
+  File "/data/healthy-ml/scratch/abinitha/miniconda3/envs/contrastive/lib/python3.12/site-packages/torch/utils/data/dataloader.py", line 520, in __len__
+    length = self._IterableDataset_len_called = len(self.dataset)  # type: ignore[assignment, arg-type]
+                                                ^^^^^^^^^^^^^^^^^
+TypeError: object of type 'IterableDataset' has no len()

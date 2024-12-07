@@ -1,0 +1,13 @@
+#!/bin/bash
+Namespace(level_of_specificity=3, num_epochs=10)
+(63,)
+Epoch [1/2], Loss: 102.5462, Accuracy: 0.3162
+Epoch [2/2], Loss: 100.7571, Accuracy: 0.5067
+Epoch [3/2], Loss: 99.8873, Accuracy: 0.5766
+Epoch [4/2], Loss: 99.2301, Accuracy: 0.6240
+Epoch [5/2], Loss: 98.6606, Accuracy: 0.6680
+Epoch [6/2], Loss: 98.1668, Accuracy: 0.7112
+Epoch [7/2], Loss: 97.8313, Accuracy: 0.7400
+Epoch [8/2], Loss: 97.5281, Accuracy: 0.7704
+Epoch [9/2], Loss: 97.2570, Accuracy: 0.7996
+Epoch [10/2], Loss: 97.0393, Accuracy: 0.8240

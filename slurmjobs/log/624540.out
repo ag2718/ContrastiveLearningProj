@@ -1,0 +1,13 @@
+#!/bin/bash
+Namespace(contr_specificity=3, class_specificity=2, num_epochs=10)
+(63,)
+Epoch [1/2]
+Train Loss: 102.0648, Train Accuracy: 0.4301
+Validation Loss: 1.9055, Validation Accuracy: 0.4429
+Validation Precision: 0.4330, Recall: 0.3438, F1-Score: 0.3413
+--------------------------------------------------
+Epoch [2/2]
+Train Loss: 100.5929, Train Accuracy: 0.5781
+Validation Loss: 1.6258, Validation Accuracy: 0.5238
+Validation Precision: 0.5228, Recall: 0.4646, F1-Score: 0.4526
+--------------------------------------------------
