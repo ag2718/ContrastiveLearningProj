@@ -1,2 +1,0 @@
-#!/bin/bash
-Namespace(level_of_specificity='2', num_epochs=10)
